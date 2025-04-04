@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Happy Birthday!</title>
+    <style>
+        :root {
+            --dark-chocolate: #3e2723;
+            --medium-chocolate: #5d4037;
+            --light-chocolate: #8d6e63;
+            --icing: #f5f5f5;
+            --candle: #ff4081;
+            --flame: #ffeb3b;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --plate-color: #f8f8f8;
+        }
+
+        body {
+            background: linear-gradient(135deg, #E6E6FA, #D8BFD8);
+            color: #4B0082;
+            text-align: center;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #FFFFFF;
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .character {
+            width: 120px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            transition: transform 0.4s ease;
+        }
+
+        .character:hover {
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #6A0DAD;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 16px;
+            color: #5a5a5a;
+            margin-bottom: 20px;
+        }
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            background: linear-gradient(45deg, #D8BFD8, #9370DB);
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            margin: 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #9370DB, #6A0DAD);
+            transform: scale(1.1);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #D8BFD8;
+        }
+
+        .valentines-day {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .envelope {
+            position: relative;
+            filter: drop-shadow(0 0 25px rgba(0, 0, 0, 0.3));
+        }
+
+        .envelope:before {
+            content: "";
+            position: absolute;
+            width: 254px;
+            height: 254px;
+            background-color: #9370DB;
+            transform: rotate(-45deg);
+            border-radius: 0 15px 0 0;
+            left: -37px;
+            top: -82px;
+        }
+
+        .envelope:after {
+            content: "";
+            position: absolute;
+            background-color: #9370DB;
+            width: 360px;
+            height: 225px;
+            left: -90px;
+            top: 45px;
+        }
+
+        .square {
+            position: relative;
+            background-color: #663399;
+            display: inline-block;
+            height: 150px;
+            width: 280px;
+            top: 70px;
+            left: -50px;
+            border-radius: 6px;
+            filter: drop-shadow(0 -10px 25px rgba(0, 0, 0, 0.3));
+            transition: 0.5s;
+        }
+
+        .text {
+            position: absolute;
+            top: 50%;
+            left: 9%;
+            transform: translate(0%, -60%);
+            font-size: 30px;
+            color: white;
+            z-index: 1;
+            transition: 0.5s;
+        }
+
+        .front {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-right: 190px solid #b4a7d6;
+            border-top: 113px solid transparent;
+            border-bottom: 113px solid transparent;
+            top: 44px;
+            left: 80px;
+            z-index: 4;
+        }
+
+        .front:before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 190px solid #b4a7d6;
+            border-top: 113px solid transparent;
+            border-bottom: 113px solid transparent;
+            top: -113px;
+            left: -170px;
+        }
+
+        .front:after {
+            width: 0;
+            height: 0;
+            position: absolute;
+            content: "";
+            border-bottom: 150px solid #d9d2e9;
+            border-right: 190px solid transparent;
+            border-left: 180px solid transparent;
+            top: -36px;
+            left: -170px;
+        }
+
+        .valentines-day:hover .square {
+            transform: translateY(-100px);
+        }
+
+        .valentines-day:hover .text {
+            transform: translateY(-65px);
+        }
+
+        #music-fallback {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        #music-fallback button {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        #music-fallback button:hover {
+            transform: scale(1.1);
+        }
+
+        audio {
+            display: none;
+        }
+
+        .cake-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .cake-container.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cake {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+            transform-style: preserve-3d;
+            animation: float 4s ease-in-out infinite;
+            margin-top: -9px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(1deg); }
+            50% { transform: translateY(-10px) rotateX(-1deg); }
+        }
+
+        .layer {
+            position: relative;
+            background: var(--medium-chocolate);
+            border-radius: 50% / 15%;
+            box-shadow: 
+                inset 0 -20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 15px 30px rgba(255, 255, 255, 0.2),
+                0 10px 25px var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .layer:hover {
+            transform: scale(1.02);
+        }
+
+        .layer::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            background: var(--icing);
+            border-radius: 80% / 44%;
+            top: -17px;
+            left: 0%;
+            box-shadow: 
+                inset 0 20px 30px rgba(255, 255, 255, 0.3),
+                0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .layer.bottom {
+            width: 340px;
+            height: 120px;
+            margin-top: -11px;
+            background: linear-gradient(to bottom, #6d4c41 0%, var(--dark-chocolate) 100%);
+        }
+
+        .layer.middle {
+            width: 280px;
+            height: 110px;
+            margin-top: -25px;
+            background: linear-gradient(to bottom, #5d4037 0%, #4e342e 100%);
+        }
+
+        .layer.top {
+            width: 220px;
+            height: 100px;
+            margin-top: -50px;
+            background: linear-gradient(to bottom, #4e342e 0%, #3e2723 100%);
+        }
+
+        .choco-chip {
+            position: absolute;
+            width: 28px;
+            height: 18px;
+            background: var(--dark-chocolate);
+            border-radius: 50% 50% 0 0;
+            top: -10px;
+            box-shadow: 
+                inset -5px -5px 8px rgba(0, 0, 0, 0.4),
+                0 3px 8px var(--shadow);
+            z-index: 3;
+            transform: rotate(var(--rotate));
+            transition: all 0.3s ease;
+        }
+
+        .choco-chip:hover {
+            transform: rotate(var(--rotate)) scale(1.2);
+        }
+
+        .choco-chip::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, 
+                rgba(255,255,255,0.3) 0%, 
+                rgba(255,255,255,0) 100%);
+            top: 3px;
+            left: 0;
+            border-radius: 50%;
+        }
+
+        .candle {
+            position: absolute;
+            width: 14px;
+            height: 80px;
+            background: linear-gradient(
+                to right,
+                var(--candle) 0%,
+                #f50057 30%,
+                var(--candle) 100%
+            );
+            top: -90px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            box-shadow: 
+                inset 0 -15px 25px rgba(0, 0, 0, 0.3),
+                0 0 15px rgba(255, 64, 129, 0.6);
+            z-index: 4;
+        }
+
+        .flame {
+            position: absolute;
+            width: 18px;
+            height: 30px;
+            background: linear-gradient(
+                to top,
+                var(--flame) 0%,
+                #ff9800 60%,
+                #ff5722 80%,
+                transparent 100%
+            );
+            border-radius: 50% 50% 20% 20%;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: blur(1.5px);
+            animation: flicker 1.8s infinite alternate;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        .flame::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            filter: blur(4px);
+            opacity: 0.8;
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: translateX(-50%) scale(1, 1); height: 30px; }
+            20% { transform: translateX(-50%) scale(1.1, 1.2); height: 28px; }
+            40% { transform: translateX(-50%) scale(1.2, 1); height: 32px; }
+            60% { transform: translateX(-50%) scale(0.9, 1); height: 30px; }
+        }
+
+        .close-cake {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff4081;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .flame.extinguished {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.1);
+            transition: all 0.5s ease;
+        }
+
+        .flame.extinguished::after {
+            opacity: 0;
+        }
+
+        .smoke {
+            position: absolute;
+            width: 8px;
+            height: 20px;
+            background: rgba(150, 150, 150, 0.6);
+            border-radius: 50%;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: blur(3px);
+            opacity: 0;
+            z-index: 6;
+        }
+
+        .video-container {
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container iframe {
+            width: 100%;
+            height: 225px;
+            border: none;
+        }
+
+        #birthday-message {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 5em;
+            color: #f8bbd0;
+            padding: 12px 24px;
+            background-color: #e1bee7;
+            border-radius: 50px;
+            opacity: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: opacity 1s ease, transform 0.6s ease;
+            text-align: center;
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+        #birthday-message.show-message {
+            opacity: 1;
+            transform: translateX(-50%) scale(1.1);
+            animation: popUp 0.6s ease;
+        }
+
+
+        @keyframes popUp {
+            0% {
+               transform: translateX(-50%) scale(0.8);
+               opacity: 0;
+            }
+            100% {
+                transform: translateX(-50%) scale(1.1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="https://www.dropbox.com/scl/fi/sm64l01kl4wlyqxlzbr6n/ruk.mp3?rlkey=6zc6wlee79hup303n0r745qa7&dl=1" type="audio/mpeg">
+    </audio>
+
+    <div id="music-fallback" class="hidden">
+        <button onclick="playMusic()">กดเพื่อเล่นเพลงรัก ❤️</button>
+    </div>
+
+    <div class="valentines-day" id="valentines-day" onclick="openEnvelope()">
+        <div class="envelope"></div>
+        <div class="square"></div>
+        <div class="text">จิ้มตรงนี้จ้า</div>
+        <div class="front"></div>
+    </div>
+
+    <div id="welcome-page" class="page hidden">
+        <div class="container">
+            <img src="https://i.ytimg.com/vi/yG_GL6G3jVo/maxresdefault.jpg" alt="สนูปปี้" class="character">
+            <h1>✨ สวัสดีจ้าน้องอิง ✨</h1>
+            <p>ก่อนจะซึ้ง เรามาเรียกรอยยิ้มกันก่อน</p>
+            <button onclick="startJourney()">เปิด</button>
+        </div>
+    </div>
+
+    <div id="question1-page" class="page hidden">
+        <div class="container">
+            <img src="https://i.pinimg.com/474x/60/fe/af/60feafe2d07784a588a6d29728dd960c.jpg" alt="สนูปปี้" class="character">
+            <h2>จำวันแรกที่เจอกันได้ไหม</h2> <h3>ติ๊ก ต่อก ติ๊ก ต่อก</h3>
+            <input type="text" id="answer1" placeholder="คำตอบของคุณ">
+            <button onclick="checkAnswer1()">ส่งคำตอบ</button>
+            <p id="hint1" class="hidden">อันนี้จำได้ว่าวันแรกที่เจอกันคือที่โรงเรียน แต่ความจริงคือ เจอกันตั้งแต่ยังไม่ตั้งไข่ แต่จำได้ว่าเริ่มสนิทกันตั้งแต่อนุบาล2 </p>
+        </div>
+    </div>
+
+    <div id="question2-page" class="page hidden">
+        <div class="container">
+            <img src="https://altv-cms-images.s3.amazonaws.com/content/image_1723278645214372597.jpg" alt="สนูปปี้และแมว" class="character">
+            <h2>อ่ะๆ เข้าเรื่องๆ วันนี้วันที่เท่าไหร่ ฮื้อ</h2>
+            <button onclick="checkAnswer2('5')">5</button>
+            <button onclick="checkAnswer2('6')">6</button>
+            <button onclick="checkAnswer2('18')">18</button>
+            <button onclick="checkAnswer2('31')">31</button>
+            <p id="hint2" class="hidden"></p>
+        </div>
+    </div>
+
+    <div id="question3-page" class="page hidden">
+        <div class="container">
+            <img src="https://altv-cms-images.s3.amazonaws.com/content/image_1723278645210768209.jpg" alt="สนูปปี้และแมว" class="character">
+            <h2>แล้ววันนี้เป็นวันอะไรเอ่ย</h2>
+            <button onclick="checkAnswer3('วันพระ')">วันพระ</button>
+            <button onclick="checkAnswer3('วันสงกรานต์')">วันสงกรานต์</button>
+            <button onclick="checkAnswer3('วันอกหัก')">วันอกหัก</button>
+            <button onclick="checkAnswer3('วันเกิดอิง')">วันเกิดอิง</button>
+            <button onclick="checkAnswer3('วันพบรัก')">วันพบรัก</button>
+            <p id="hint3" class="hidden"></p>
+        </div>
+    </div>
+
+        <div id="welcomepage" class="page hidden">
+        <div class="container">
+            <img src="https://www.lomocliplens.com/uploads/product/social/8483c13ece3508ec9f04d870b6f5c3ba.png" alt="สนูปปี้" class="character">
+            <h1> ก่อนจะไปหน้าถัดไป ลุกไปเตรียมหูฟังมาเร็ว </h1>
+            <p>มันต้องได้ใช้ //ไม่ใช้ไม่ได้// ต้องใช้นะ เดียวมันได้ยินไม่ชัด</p>
+            <button onclick="startJourney2()">ไปกันเลย</button>
+        </div>
+    </div>
+
+    <div id="video-page" class="page hidden">
+        <div class="container">
+            <img src="https://scontent.fbkk6-2.fna.fbcdn.net/v/t1.6435-9/43828504_346713476080105_1748074203690565632_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEuwWQ4ikNhG160HSjPpUP3_45F1YgeUoT_jkXViB5ShJIj8yHw6ISnCKrSWHaKMqvMU-17QxiXW7pcxfKTGggG&_nc_ohc=pQialTdVnHQQ7kNvwFLOif5&_nc_oc=AdnF5Wj5jkZxehP7ydQWmX2BjGdNX9fv96u1GvGTDLU9b6DNIIoRjz5a8JockwBC8e0&_nc_zt=23&_nc_ht=scontent.fbkk6-2.fna&_nc_gid=pq9N_hgAtgw8lR-QeqBasA&oh=00_AYFTSJPzZZn6blk_SSW4-uA2VIRP1TRUsgD_IL4PyxQ8-g&oe=68173A74" alt="สนูปปี้และแมว" class="character">
+            <h1>🎥 ถึงแม้ตัวอยู่ไกล ใจก็ยังส่งถึง 🎥</h1>
+            <p> คลิปนี้ให้ดูได้รอบเดียวนะ อายย </p>
+            
+            <div class="video-container">
+                <!-- วิดีโอ YouTube ที่เกี่ยวกับวันเกิด -->
+                <iframe src="https://www.youtube.com/embed/sqFaU438jnE" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            
+            <button onclick="proceedToSurprise()">ไปต่อกันเลย!</button>
+        </div>
+    </div>
+
+    <div id="surprise-page" class="page hidden">
+        <div class="container">
+            <img src="https://scontent.fbkk6-2.fna.fbcdn.net/v/t39.30808-6/487818444_1867824517302319_5315656958592928262_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFflkwgDbbTsrictFzMuQKl2kdigySxYjHaR2KDJLFiMSFJ6dKQgG_5Vb0fCehSMw5R4rK60Wys5ynPKW_cKUPv&_nc_ohc=SlK-G6mkM28Q7kNvwHic62j&_nc_oc=Admm8llRO_y-rL9Bd5sZUzhpOGHMM97Pbs4Je_v9ReBY-D0E0AWLhQZJK8D0ifz-GDg&_nc_zt=23&_nc_ht=scontent.fbkk6-2.fna&_nc_gid=JE-d8weLALinxSPqPTt5eg&oh=00_AYFC0G-2T5l11hmi5Pswz4YGvsAEPPaPfn6t8Bnb7A0Ykg&oe=67F59023" alt="สนูปปี้และแมว" class="character">
+            <h1>🎉🎂 วันเกิดทั้งทีต้องมีเค้กนะ 🎂🎉</h1>
+            <p>กดตรงปุ่มเป่าเค้กวันเกิด อธิษฐานเสร็จแล้ว กดที่เปลวไฟของเทียนนะ</p>
+            <button onclick="showFinalCake()">เป่าเค้กวันเกิด</button>
+        </div>
+    </div>
+  
+    <div class="cake-container" id="cake-container">
+        <button class="close-cake" onclick="hideCake()">×</button>
+        <div class="cake">
+            <div class="layer top">
+                <div class="candle">
+                    <div class="flame"></div>
+                </div>
+                <div class="choco-chip" style="left: 30%; --rotate: -8deg;"></div>
+                <div class="choco-chip" style="left: 70%; --rotate: 12deg;"></div>
+            </div>
+            <div class="layer middle">
+                <div class="choco-chip" style="left: 25%; --rotate: 5deg;"></div>
+                <div class="choco-chip" style="left: 50%; --rotate: -10deg;"></div>
+                <div class="choco-chip" style="left: 75%; --rotate: 15deg;"></div>
+            </div>
+            <div class="layer bottom">
+                <div class="choco-chip" style="left: 15%; --rotate: -15deg;"></div>
+                <div class="choco-chip" style="left: 35%; --rotate: 18deg;"></div>
+                <div class="choco-chip" style="left: 65%; --rotate: -5deg;"></div>
+                <div class="choco-chip" style="left: 85%; --rotate: 20deg;"></div>
+            </div>
+            <div id="birthday-message" class="hidden">
+                <h1>🎉 พรของคุณสมปรารถนาแล้ว 🎉</h1>
+            </div>
+        </div>
+    </div>
+   
+
+
+    <script>
+        let bgMusic;
+        let isMusicPlaying = false;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            bgMusic = document.getElementById('bg-music');
+            bgMusic.volume = 0.5;
+        });
+
+        function playMusic() {
+            bgMusic.play()
+                .then(() => {
+                    isMusicPlaying = true;
+                    document.getElementById('music-fallback').classList.add('hidden');
+                })
+                .catch(error => {
+                    document.getElementById('music-fallback').classList.remove('hidden');
+                });
+        }
+
+        function pauseMusic() {
+            bgMusic.pause();
+            isMusicPlaying = false;
+        }
+
+        function resumeMusic() {
+            if (!isMusicPlaying) {
+                bgMusic.play();
+                isMusicPlaying = true;
+            }
+        }
+
+        function openEnvelope() {
+            const valentinesDay = document.getElementById('valentines-day');
+            const welcomePage = document.getElementById('welcome-page');
+            valentinesDay.style.display = 'none';
+            welcomePage.classList.remove('hidden');
+            playMusic();
+        }
+
+        function startJourney() {
+            hidePage('welcome-page');
+            showPage('question1-page');
+        }
+
+        function checkAnswer1() {
+            const hint1 = document.getElementById('hint1');
+            hint1.classList.remove('hidden');
+            setTimeout(() => {
+                hidePage('question1-page');
+                showPage('question2-page');
+            }, 8000);
+        }
+
+        function checkAnswer2(answer) {
+            const hint2 = document.getElementById('hint2');
+            if (answer === '5') {
+                hint2.textContent = 'ถูกต้องจ้า วันนี้คือวันที่ 5 เมษายน';
+            } else {
+                hint2.textContent = 'ยังไม่ถูกนะ วันนี้คือวันที่ 5 เมษายนต่างหาก';
+            }
+            hint2.classList.remove('hidden');
+            setTimeout(() => {
+                hidePage('question2-page');
+                showPage('question3-page');
+            }, 3500);
+        }
+
+        function checkAnswer3(answer) {
+            const hint3 = document.getElementById('hint3');
+            if (answer === 'วันเกิดอิง') {
+                hint3.textContent = 'ใช่แล้ว วันนี้เป็นวันเกิดของอิงครัต';
+            } else {
+                hint3.textContent = 'ไม่ใช่จ้า วันนี้วันเกิดมึงต่างหาก ลืมวันลืมคืนเกินไปละมั้ง';
+            }
+            hint3.classList.remove('hidden');
+            setTimeout(() => {
+                hidePage('question3-page');
+                showPage('welcomepage');
+            }, 3500);
+        }
+
+         function startJourney2() {
+            hidePage('welcomepage');
+            showPage('video-page');
+            pauseMusic();
+        }
+
+        function proceedToSurprise() {
+            hidePage('video-page');
+            showPage('surprise-page');
+            resumeMusic();
+        }
+
+        function showFinalCake() {
+            const cakeContainer = document.getElementById('cake-container');
+            cakeContainer.classList.add('show');
+            
+            const flame = document.querySelector('.flame');
+            flame.addEventListener('click', extinguishCandle);
+        }
+
+        function extinguishCandle() {
+            const flame = document.querySelector('.flame');
+            const candle = document.querySelector('.candle');
+            
+            flame.classList.add('extinguished');
+            flame.style.animation = 'none';
+            
+            createSmoke();
+            
+            flame.removeEventListener('click', extinguishCandle);
+            flame.style.cursor = 'default';
+        }
+
+        function createSmoke() {
+            const candle = document.querySelector('.candle');
+            const smoke = document.createElement('div');
+            smoke.className = 'smoke';
+            candle.appendChild(smoke);
+            
+            let opacity = 0;
+            let height = 20;
+            let interval = setInterval(() => {
+                opacity += 0.05;
+                height += 2;
+                smoke.style.opacity = opacity;
+                smoke.style.height = `${height}px`;
+                smoke.style.top = `-${height + 20}px`;
+                
+                if (opacity >= 0.8) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        let fadeInterval = setInterval(() => {
+                            opacity -= 0.05;
+                            smoke.style.opacity = opacity;
+                            if (opacity <= 0) {
+                                clearInterval(fadeInterval);
+                                smoke.remove();
+
+                                const message = document.getElementById('birthday-message');
+                                message.classList.remove('hidden');
+                                message.classList.add('show-message');
+                            }
+                        }, 50);
+                    }, 1000);
+                }
+            }, 50);
+        }
+
+        function hideCake() {
+            const cakeContainer = document.getElementById('cake-container');
+            cakeContainer.classList.remove('show');
+        }
+
+        function hidePage(pageId) {
+            document.getElementById(pageId).classList.add('hidden');
+        }
+
+        function showPage(pageId) {
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
